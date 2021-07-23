@@ -40,8 +40,8 @@ public class AccountController {
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestResponse<Account>> get(@PathVariable Long id) {
         Account acc = accountRepository.findById(id)
-                .map(employee -> {
-                    return employee;
+                .map(account -> {
+                    return account;
                 })
                 .orElseThrow(() -> new DataNotFoundException(id));
         return ResponseEntity.ok().body(RestResponse.success(acc));
@@ -63,12 +63,12 @@ public class AccountController {
     @PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestResponse<Account>> update(@RequestBody Account newAccount, @PathVariable Long id) {
         Account acc = accountRepository.findById(id)
-                .map(employee -> {
-                    employee.setAccountName(newAccount.getAccountName());
-                    employee.setAccountNumber(newAccount.getAccountNumber());
-                    employee.setCif(newAccount.getCif());
-                    employee.setUpdateAt(LocalDateTime.now());
-                    return employee;
+                .map(account -> {
+                    account.setAccountName(newAccount.getAccountName());
+                    account.setAccountNumber(newAccount.getAccountNumber());
+                    account.setCif(newAccount.getCif());
+                    account.setUpdateAt(LocalDateTime.now());
+                    return account;
                 })
                 .orElseThrow(() -> new DataNotFoundException(id));
         accountRepository.save(acc);
@@ -78,8 +78,8 @@ public class AccountController {
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<RestResponse<Account>> delete(@PathVariable Long id) {
         Account acc = accountRepository.findById(id)
-                .map(employee -> {
-                    return employee;
+                .map(account -> {
+                    return account;
                 })
                 .orElseThrow(() -> new DataNotFoundException(id));
         accountRepository.delete(acc);
